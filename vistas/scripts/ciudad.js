@@ -115,17 +115,30 @@ function mostrar(idciudad)
 
 //funcion para desactivar registros
 function eliminar(idciudad)
-{
-    bootbox.confirm("¿Esta seguro de eliminar la Ciudad?", function(result){
-        if(result)
-        {
-            $.post("../ajax/ciudad.php?op=eliminar", {idciudad : idciudad}, function(e){
+{​​​​​​​
+    bootbox.confirm({​​​​​​​
+        message: "¿CUIDADO¡¡¡¡, Esta seguro de Eliminar esta Ciudad?",
+        buttons: {​​​​​​​
+         confirm: {​​​​​​​
+            label: 'Sí',
+            className: 'btn-success'
+         }​​​​​​​,
+         cancel: {​​​​​​​
+            label: 'No',
+            className: 'btn-danger'
+         }​​​​​​​
+       }​​​​​​​, 
+       callback:  function(result){​​​​​​​
+       if(result)
+        {​​​​​​​
+            $.post("../ajax/ciudad.php?op=eliminar", {​​​​​​​idciudad : idciudad}​​​​​​​, function(e){​​​​​​​
                 bootbox.alert(e);
                 tabla.ajax.reload();
-            });
-        }
-    })
-}
+            }​​​​​​​);
+        }​​​​​​​
+       }​​​​​​​
+    }​​​​​​​)
+}​​​​​​​
 
 
 init();

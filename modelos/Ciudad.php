@@ -39,5 +39,19 @@ Class Ciudad
         return ejecutarConsulta($sql);
     }
 
+    //Función eliminar los registros 
+    public function eliminar($idciudad) {
+        $sql="DELETE FROM ciudad WHERE idciudad='$idciudad'";
+        return ejecutarConsulta($sql);
+    }
+
+    // Función Editar los registros
+    public function editar($idciudad, $descripcion) {
+        $sql = "UPDATE ciudad SET descripcion='$descripcion' WHERE idciudad='$idciudad'";
+        return ejecutarConsulta($sql);
+    }
+
+   
+
 }
 ?>

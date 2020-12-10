@@ -50,15 +50,12 @@ function listar()
 {
     tabla=$('#tbllistado').dataTable(
         {
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"},
+            "pagingType": "simple_numbers", // "simple" option for 'Previous' and 'Next' buttons only
+            "fixedColumns":true,
             "aProcessing": true,  //activamos el procesamiento de datatables
-            "aServerSide": true,  //paginacion y filtrado realizados por el servidor
-            dom: 'Bfrtip',   //Definimos los elementos del control de tabla
-            buttons: [
-                        'copyHtml5',
-                        'excelHtml5',
-                        'csvHtml5',
-                        'pdf'
-            ],
+            "aServerSide": true,  //paginacion y filtrado realizados por el servidor   
         "ajax":
             {         
                 url:'../ajax/categoria.php?op=listar',
@@ -89,7 +86,7 @@ function guardaryeditar(e)
 
         success: function(datos)
         {
-            alert(datos);
+            bootbox.alert(datos);
             mostrarform(false);
             tabla.ajax.reload();
         }
@@ -114,20 +111,45 @@ function mostrar(idcategoria)
 //funcion para desactivar registros
 function desactivar(idcategoria)
 {
-    bootbox.confirm("¿Esta seguro de desactivar la Categoria?", function(result){
-        if(result)
-        {
-            $.post("../ajax/categoria.php?op=desactivar", {idcategoria : idcategoria}, function(e){
-                bootbox.alert(e);
-                tabla.ajax.reload();
-            });
-        }
-    })
+    bootbox.confirm({
+        message: "¿Esta seguro de Desactivar la Categoria?",
+        buttons: {
+         confirm: {
+            label: 'Sí',
+            className: 'btn-success'
+         },
+         cancel: {
+            label: 'No',
+            className: 'btn-danger'
+         }
+       },    
+          callback:  function(result){
+                if(result)
+                {
+                    $.post("../ajax/categoria.php?op=desactivar", {idcategoria : idcategoria}, function(e){
+                        bootbox.alert(e);
+                        tabla.ajax.reload();
+                    });
+                }
+            }
+    });
 }
 
 function activar(idcategoria)
 {
-    bootbox.confirm("¿Esta seguro de activar la Categoria?", function(result){
+    bootbox.confirm({
+           message: "¿Esta seguro de activar la Categoria?",
+           buttons: {
+            confirm: {
+               label: 'Sí',
+               className: 'btn-success'
+            },
+            cancel: {
+               label: 'No',
+               className: 'btn-danger'
+            }
+          }, 
+        callback: function(result){
         if(result)
         {
             $.post("../ajax/categoria.php?op=activar", {idcategoria : idcategoria}, function(e){
@@ -135,7 +157,9 @@ function activar(idcategoria)
                 tabla.ajax.reload();
             });
         }
-    })
+    }
+    });
+
 }
 
 
